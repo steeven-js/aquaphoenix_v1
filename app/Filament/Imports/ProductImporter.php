@@ -28,15 +28,26 @@ class ProductImporter extends Importer
                 ->boolean()
                 ->rules(['boolean']),
             ImportColumn::make('published_at')
-                ->rules(['date']),
+                ->rules(['nullable', 'date']),
         ];
     }
 
     public function resolveRecord(): ?Product
     {
-        return Product::firstOrNew([
-            'slug' => $this->data['slug'] ?? null,
+        // Gérer les dates vides en les convertissant en null
+        $data = $this->data;
+        if (isset($data['published_at']) && empty($data['published_at'])) {
+            $data['published_at'] = null;
+        }
+        
+        $product = Product::firstOrNew([
+            'slug' => $data['slug'] ?? null,
         ]);
+        
+        // Appliquer les données nettoyées
+        $product->fill($data);
+        
+        return $product;
     }
 
     public static function getCompletedNotificationBody(Import $import): string
