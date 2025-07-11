@@ -15,11 +15,14 @@ class ListProducts extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->label('Créer'),
             Actions\ImportAction::make()
-                ->importer(ProductImporter::class),
+                ->importer(ProductImporter::class)
+                ->label('Importer'),
             Actions\ExportAction::make()
-                ->exporter(ProductExporter::class),
+                ->exporter(ProductExporter::class)
+                ->label('Exporter'),
         ];
     }
 }

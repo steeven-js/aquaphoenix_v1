@@ -9,6 +9,8 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 
 /**
  * Ressource Filament pour gérer les articles de commande.
@@ -136,14 +138,63 @@ class OrderItemResource extends Resource
                     ->preload(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ViewAction::make()
+                    ->label('Voir'),
+                Tables\Actions\EditAction::make()
+                    ->label('Modifier'),
+                Tables\Actions\DeleteAction::make()
+                    ->label('Supprimer'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\ExportBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->label('Supprimer sélectionnés'),
+                    Tables\Actions\ExportBulkAction::make()
+                        ->label('Exporter sélectionnés'),
                 ]),
+            ])
+            ->recordUrl(null); // Désactive le clic pour rediriger
+    }
+
+    /**
+     * Définit l'infolist pour la visualisation des articles de commande.
+     */
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\Section::make('Détails de l\'article')
+                    ->schema([
+                        Infolists\Components\TextEntry::make('order.number')
+                            ->label('N° Commande'),
+                        Infolists\Components\TextEntry::make('order.status')
+                            ->label('Statut de la commande')
+                            ->badge()
+                            ->colors([
+                                'warning' => 'en progression',
+                                'success' => 'livré',
+                                'danger' => 'annulé',
+                            ]),
+                        Infolists\Components\TextEntry::make('order.customer.name')
+                            ->label('Client'),
+                        Infolists\Components\TextEntry::make('order.customer.email')
+                            ->label('Email du client'),
+                        Infolists\Components\TextEntry::make('product.name')
+                            ->label('Produit'),
+                        Infolists\Components\TextEntry::make('product.description')
+                            ->label('Description du produit'),
+                        Infolists\Components\TextEntry::make('qty')
+                            ->label('Quantité'),
+                        Infolists\Components\TextEntry::make('sort')
+                            ->label('Ordre de tri'),
+                        Infolists\Components\TextEntry::make('created_at')
+                            ->label('Date de création')
+                            ->dateTime('d/m/Y H:i'),
+                        Infolists\Components\TextEntry::make('updated_at')
+                            ->label('Dernière modification')
+                            ->dateTime('d/m/Y H:i'),
+                    ])
+                    ->columns(2),
             ]);
     }
 

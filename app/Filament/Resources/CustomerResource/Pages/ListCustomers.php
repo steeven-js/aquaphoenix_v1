@@ -15,11 +15,14 @@ class ListCustomers extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->label('Créer'),
             Actions\ImportAction::make()
-                ->importer(CustomerImporter::class),
+                ->importer(CustomerImporter::class)
+                ->label('Importer'),
             Actions\ExportAction::make()
-                ->exporter(CustomerExporter::class),
+                ->exporter(CustomerExporter::class)
+                ->label('Exporter'),
         ];
     }
 }

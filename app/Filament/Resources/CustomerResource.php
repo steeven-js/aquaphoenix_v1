@@ -9,6 +9,8 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 
 /**
  * Ressource Filament pour gérer les clients.
@@ -39,25 +41,33 @@ class CustomerResource extends Resource
     {
         return $form->schema([
             Forms\Components\TextInput::make('name')
+                ->label('Nom')
                 ->required()
                 ->maxLength(255),
             Forms\Components\TextInput::make('email')
+                ->label('Email')
                 ->email()
                 ->required()
                 ->unique(ignoreRecord: true)
                 ->maxLength(255),
             Forms\Components\TextInput::make('address')
+                ->label('Adresse')
                 ->maxLength(255),
-            Forms\Components\FileUpload::make('photo'),
+            Forms\Components\FileUpload::make('photo')
+                ->label('Photo'),
             Forms\Components\TextInput::make('phone1')
+                ->label('Téléphone 1')
                 ->tel()
                 ->maxLength(255),
             Forms\Components\TextInput::make('phone2')
+                ->label('Téléphone 2')
                 ->tel()
                 ->maxLength(255),
             Forms\Components\TextInput::make('code')
+                ->label('Code')
                 ->maxLength(255),
             Forms\Components\TextInput::make('commune')
+                ->label('Commune')
                 ->maxLength(255),
         ]);
     }
@@ -73,15 +83,20 @@ class CustomerResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Nom')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
+                    ->label('Email')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone1')
+                    ->label('Téléphone 1')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('commune')
+                    ->label('Commune')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Date de création')
+                    ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -89,14 +104,58 @@ class CustomerResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ViewAction::make()
+                    ->label('Voir'),
+                Tables\Actions\EditAction::make()
+                    ->label('Modifier'),
+                Tables\Actions\DeleteAction::make()
+                    ->label('Supprimer'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\ExportBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->label('Supprimer sélectionnés'),
+                    Tables\Actions\ExportBulkAction::make()
+                        ->label('Exporter sélectionnés'),
                 ]),
+            ])
+            ->recordUrl(null); // Désactive le clic pour rediriger
+    }
+
+    /**
+     * Définit l'infolist pour la visualisation des clients.
+     */
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\Section::make('Informations du client')
+                    ->schema([
+                        Infolists\Components\TextEntry::make('name')
+                            ->label('Nom'),
+                        Infolists\Components\TextEntry::make('email')
+                            ->label('Email'),
+                        Infolists\Components\TextEntry::make('phone1')
+                            ->label('Téléphone 1'),
+                        Infolists\Components\TextEntry::make('phone2')
+                            ->label('Téléphone 2'),
+                        Infolists\Components\TextEntry::make('address')
+                            ->label('Adresse')
+                            ->columnSpanFull(),
+                        Infolists\Components\TextEntry::make('commune')
+                            ->label('Commune'),
+                        Infolists\Components\TextEntry::make('code')
+                            ->label('Code'),
+                        Infolists\Components\ImageEntry::make('photo')
+                            ->label('Photo'),
+                        Infolists\Components\TextEntry::make('created_at')
+                            ->label('Date de création')
+                            ->dateTime('d/m/Y H:i'),
+                        Infolists\Components\TextEntry::make('updated_at')
+                            ->label('Dernière modification')
+                            ->dateTime('d/m/Y H:i'),
+                    ])
+                    ->columns(2),
             ]);
     }
 

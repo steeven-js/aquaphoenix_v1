@@ -15,11 +15,14 @@ class ListOrderItems extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->label('Créer'),
             Actions\ImportAction::make()
-                ->importer(OrderItemImporter::class),
+                ->importer(OrderItemImporter::class)
+                ->label('Importer'),
             Actions\ExportAction::make()
-                ->exporter(OrderItemExporter::class),
+                ->exporter(OrderItemExporter::class)
+                ->label('Exporter'),
         ];
     }
 }

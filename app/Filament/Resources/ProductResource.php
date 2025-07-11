@@ -9,6 +9,8 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 
 /**
  * Ressource Filament pour gérer les produits/désignations.
@@ -39,17 +41,24 @@ class ProductResource extends Resource
     {
         return $form->schema([
             Forms\Components\TextInput::make('name')
+                ->label('Nom')
                 ->required()
                 ->maxLength(255),
             Forms\Components\TextInput::make('slug')
+                ->label('Slug')
                 ->unique(ignoreRecord: true)
                 ->maxLength(255),
             Forms\Components\Textarea::make('description')
+                ->label('Description')
                 ->maxLength(65535)
                 ->columnSpanFull(),
             Forms\Components\Toggle::make('is_visible')
+                ->label('Visible')
                 ->default(false),
-            Forms\Components\DatePicker::make('published_at'),
+            Forms\Components\DatePicker::make('published_at')
+                ->label('Date de publication')
+                ->displayFormat('d/m/Y')
+                ->format('Y-m-d'),
         ]);
     }
 
@@ -64,16 +73,21 @@ class ProductResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Nom')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('slug')
+                    ->label('Slug')
                     ->searchable(),
                 Tables\Columns\IconColumn::make('is_visible')
+                    ->label('Visible')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('published_at')
-                    ->date()
+                    ->label('Date de publication')
+                    ->date('d/m/Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Date de création')
+                    ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -81,14 +95,54 @@ class ProductResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ViewAction::make()
+                    ->label('Voir'),
+                Tables\Actions\EditAction::make()
+                    ->label('Modifier'),
+                Tables\Actions\DeleteAction::make()
+                    ->label('Supprimer'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\ExportBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->label('Supprimer sélectionnés'),
+                    Tables\Actions\ExportBulkAction::make()
+                        ->label('Exporter sélectionnés'),
                 ]),
+            ])
+            ->recordUrl(null); // Désactive le clic pour rediriger
+    }
+
+    /**
+     * Définit l'infolist pour la visualisation des produits.
+     */
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\Section::make('Informations du produit')
+                    ->schema([
+                        Infolists\Components\TextEntry::make('name')
+                            ->label('Nom'),
+                        Infolists\Components\TextEntry::make('slug')
+                            ->label('Slug'),
+                        Infolists\Components\TextEntry::make('description')
+                            ->label('Description')
+                            ->columnSpanFull(),
+                        Infolists\Components\IconEntry::make('is_visible')
+                            ->label('Visible')
+                            ->boolean(),
+                        Infolists\Components\TextEntry::make('published_at')
+                            ->label('Date de publication')
+                            ->date('d/m/Y'),
+                        Infolists\Components\TextEntry::make('created_at')
+                            ->label('Date de création')
+                            ->dateTime('d/m/Y H:i'),
+                        Infolists\Components\TextEntry::make('updated_at')
+                            ->label('Dernière modification')
+                            ->dateTime('d/m/Y H:i'),
+                    ])
+                    ->columns(2),
             ]);
     }
 
