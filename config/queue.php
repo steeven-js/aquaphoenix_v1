@@ -72,6 +72,16 @@ return [
             'after_commit' => false,
         ],
 
+        // Configuration spéciale pour les exports
+        'exports' => [
+            'driver' => 'redis',
+            'connection' => 'default',
+            'queue' => 'exports',
+            'retry_after' => 300, // 5 minutes pour les gros exports
+            'block_for' => null,
+            'after_commit' => false,
+        ],
+
     ],
 
     /*

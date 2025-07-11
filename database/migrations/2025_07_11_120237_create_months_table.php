@@ -6,20 +6,26 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
         Schema::create('months', function (Blueprint $table) {
             $table->id();
-            $table->string('year')->nullable();
-            $table->string('month')->nullable();
-            $table->string('month_number')->nullable();
-            $table->integer('count')->default(0)->nullable();
+            $table->string('year');
+            $table->string('month');
+            $table->string('month_number');
+            $table->integer('count');
             $table->timestamp('report_created_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
         Schema::dropIfExists('months');

@@ -9,6 +9,10 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Actions\ImportAction;
+use Filament\Actions\ExportAction;
+use App\Filament\Imports\CustomerImporter;
+use App\Filament\Exports\CustomerExporter;
 
 /**
  * Ressource Filament pour gérer les clients
@@ -95,8 +99,10 @@ class CustomerResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\ExportBulkAction::make(),
                 ]),
-            ]);
+            ])
+;
     }
 
     /**
