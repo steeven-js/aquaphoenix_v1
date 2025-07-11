@@ -2,8 +2,8 @@
 
 namespace App\Filament\Imports;
 
-use App\Models\OrderItem;
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Importer;
@@ -23,25 +23,25 @@ class OrderItemImporter extends Importer
             ImportColumn::make('order_id')
                 ->numeric()
                 ->rules(['integer', 'exists:orders,id']),
-            
+
             // Import par numéro de commande (alternative)
             ImportColumn::make('order_number')
                 ->rules(['string', 'exists:orders,number']),
-            
+
             // Import par ID de produit (prioritaire)
             ImportColumn::make('product_id')
                 ->numeric()
                 ->rules(['integer', 'exists:products,id']),
-            
+
             // Import par nom de produit (alternative)
             ImportColumn::make('product_name')
                 ->rules(['string', 'exists:products,name']),
-            
+
             ImportColumn::make('qty')
                 ->requiredMapping()
                 ->numeric()
                 ->rules(['required', 'integer', 'min:1']),
-            
+
             ImportColumn::make('sort')
                 ->numeric()
                 ->rules(['integer', 'min:0'])
@@ -53,19 +53,19 @@ class OrderItemImporter extends Importer
     {
         // Résoudre l'order_id
         $orderId = $this->data['order_id'] ?? null;
-        if (!$orderId && !empty($this->data['order_number'])) {
+        if (! $orderId && ! empty($this->data['order_number'])) {
             $order = Order::where('number', $this->data['order_number'])->first();
             $orderId = $order?->id;
         }
 
         // Résoudre le product_id
         $productId = $this->data['product_id'] ?? null;
-        if (!$productId && !empty($this->data['product_name'])) {
+        if (! $productId && ! empty($this->data['product_name'])) {
             $product = Product::where('name', $this->data['product_name'])->first();
             $productId = $product?->id;
         }
 
-        if (!$orderId || !$productId) {
+        if (! $orderId || ! $productId) {
             return null; // Échec de résolution des relations
         }
 
@@ -85,4 +85,4 @@ class OrderItemImporter extends Importer
 
         return $body;
     }
-} 
+}

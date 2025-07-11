@@ -49,4 +49,4 @@ class ProductImporter extends Importer
 
         return $body;
     }
-} 
+}

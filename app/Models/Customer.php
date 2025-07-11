@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * Modèle pour gérer les clients
+ * Modèle pour gérer les clients.
  */
 class Customer extends Model
 {
     use HasFactory;
 
     /**
-     * Les attributs qui peuvent être assignés en masse
+     * Les attributs qui peuvent être assignés en masse.
      *
      * @var array<string>
      */
@@ -30,9 +30,7 @@ class Customer extends Model
     ];
 
     /**
-     * Récupère les commandes associées au client
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * Récupère les commandes associées au client.
      */
     public function orders(): HasMany
     {

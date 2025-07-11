@@ -9,13 +9,9 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Filament\Actions\ImportAction;
-use Filament\Actions\ExportAction;
-use App\Filament\Imports\CustomerImporter;
-use App\Filament\Exports\CustomerExporter;
 
 /**
- * Ressource Filament pour gérer les clients
+ * Ressource Filament pour gérer les clients.
  */
 class CustomerResource extends Resource
 {
@@ -34,9 +30,9 @@ class CustomerResource extends Resource
     protected static ?int $navigationSort = 1;
 
     /**
-     * Définit le formulaire de création/édition des clients
+     * Définit le formulaire de création/édition des clients.
      *
-     * @param Form $form Le formulaire à configurer
+     * @param  Form  $form  Le formulaire à configurer
      * @return Form Le formulaire configuré
      */
     public static function form(Form $form): Form
@@ -67,9 +63,9 @@ class CustomerResource extends Resource
     }
 
     /**
-     * Définit la table de liste des clients
+     * Définit la table de liste des clients.
      *
-     * @param Table $table La table à configurer
+     * @param  Table  $table  La table à configurer
      * @return Table La table configurée
      */
     public static function table(Table $table): Table
@@ -101,12 +97,11 @@ class CustomerResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                     Tables\Actions\ExportBulkAction::make(),
                 ]),
-            ])
-;
+            ]);
     }
 
     /**
-     * Définit les pages disponibles pour cette ressource
+     * Définit les pages disponibles pour cette ressource.
      *
      * @return array Les pages configurées
      */

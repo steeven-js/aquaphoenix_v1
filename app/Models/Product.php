@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * Modèle pour gérer les produits
+ * Modèle pour gérer les produits.
  */
 class Product extends Model
 {
     use HasFactory;
 
     /**
-     * Les attributs qui peuvent être assignés en masse
+     * Les attributs qui peuvent être assignés en masse.
      *
      * @var array<string>
      */
@@ -27,7 +27,7 @@ class Product extends Model
     ];
 
     /**
-     * Les attributs à convertir automatiquement
+     * Les attributs à convertir automatiquement.
      *
      * @var array<string, string>
      */
@@ -37,9 +37,7 @@ class Product extends Model
     ];
 
     /**
-     * Récupère les articles de commande associés au produit
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * Récupère les articles de commande associés au produit.
      */
     public function orderItems(): HasMany
     {

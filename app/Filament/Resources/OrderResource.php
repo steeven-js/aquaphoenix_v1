@@ -8,12 +8,11 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Table;
 use Filament\Tables\Actions\Action;
-use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Table;
 
 /**
- * Ressource Filament pour gérer les commandes/bons de livraison
+ * Ressource Filament pour gérer les commandes/bons de livraison.
  */
 class OrderResource extends Resource
 {
@@ -32,9 +31,9 @@ class OrderResource extends Resource
     protected static ?int $navigationSort = 2;
 
     /**
-     * Définit le formulaire de création/édition des commandes
+     * Définit le formulaire de création/édition des commandes.
      *
-     * @param Form $form Le formulaire à configurer
+     * @param  Form  $form  Le formulaire à configurer
      * @return Form Le formulaire configuré
      */
     public static function form(Form $form): Form
@@ -73,6 +72,7 @@ class OrderResource extends Resource
                         ->default(function () {
                             $lastOrder = Order::orderBy('id', 'desc')->first();
                             $lastNumber = $lastOrder ? (int) preg_replace('/[^0-9]/', '', $lastOrder->number) : 0;
+
                             return 'CMD-' . str_pad($lastNumber + 1, 4, '0', STR_PAD_LEFT);
                         })
                         ->disabled()
@@ -148,9 +148,9 @@ class OrderResource extends Resource
     }
 
     /**
-     * Définit la table de liste des commandes
+     * Définit la table de liste des commandes.
      *
-     * @param Table $table La table à configurer
+     * @param  Table  $table  La table à configurer
      * @return Table La table configurée
      */
     public static function table(Table $table): Table
@@ -215,7 +215,7 @@ class OrderResource extends Resource
     }
 
     /**
-     * Définit les pages de la ressource
+     * Définit les pages de la ressource.
      *
      * @return array Les routes des pages
      */

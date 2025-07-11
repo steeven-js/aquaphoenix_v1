@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Modèle pour gérer les articles d'une commande
+ * Modèle pour gérer les articles d'une commande.
  */
 class OrderItem extends Model
 {
     use HasFactory;
 
     /**
-     * Les attributs qui peuvent être assignés en masse
+     * Les attributs qui peuvent être assignés en masse.
      *
      * @var array<string>
      */
@@ -26,9 +26,7 @@ class OrderItem extends Model
     ];
 
     /**
-     * Récupère la commande associée à l'article
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Récupère la commande associée à l'article.
      */
     public function order(): BelongsTo
     {
@@ -36,9 +34,7 @@ class OrderItem extends Model
     }
 
     /**
-     * Récupère le produit associé à l'article
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Récupère le produit associé à l'article.
      */
     public function product(): BelongsTo
     {

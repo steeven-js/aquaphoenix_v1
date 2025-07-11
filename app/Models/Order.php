@@ -9,14 +9,15 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Modèle pour gérer les commandes
+ * Modèle pour gérer les commandes.
  */
 class Order extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
+    use SoftDeletes;
 
     /**
-     * Les attributs qui peuvent être assignés en masse
+     * Les attributs qui peuvent être assignés en masse.
      *
      * @var array<string>
      */
@@ -33,7 +34,7 @@ class Order extends Model
     ];
 
     /**
-     * Les attributs à convertir automatiquement
+     * Les attributs à convertir automatiquement.
      *
      * @var array<string, string>
      */
@@ -46,9 +47,7 @@ class Order extends Model
     ];
 
     /**
-     * Récupère le client associé à la commande
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Récupère le client associé à la commande.
      */
     public function customer(): BelongsTo
     {
@@ -56,9 +55,7 @@ class Order extends Model
     }
 
     /**
-     * Récupère les articles de la commande
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * Récupère les articles de la commande.
      */
     public function items(): HasMany
     {

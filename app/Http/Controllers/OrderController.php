@@ -2,25 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Carbon;
-use Barryvdh\DomPDF\Facade\Pdf;
-use App\Models\CompanyInfo;
-use Illuminate\Support\Facades\Mail;
 use App\Mail\DeliveryNoteMail;
+use App\Models\CompanyInfo;
+use App\Models\Order;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 /**
- * Contrôleur pour gérer les commandes et les bons de livraison
+ * Contrôleur pour gérer les commandes et les bons de livraison.
  */
 class OrderController extends Controller
 {
     /**
-     * Génère le bon de livraison PDF pour une commande
+     * Génère le bon de livraison PDF pour une commande.
      *
-     * @param Order $order La commande pour laquelle générer le bon de livraison
+     * @param  Order  $order  La commande pour laquelle générer le bon de livraison
      * @return \Barryvdh\DomPDF\Pdf Le PDF généré
      */
     public function generateDeliveryNote(Order $order)
@@ -57,7 +56,7 @@ class OrderController extends Controller
         $pdfDirectory = "pdf/{$year}/bons-livraison/";
         $fullPdfDirectory = storage_path("app/public/{$pdfDirectory}");
 
-        if (!file_exists($fullPdfDirectory)) {
+        if (! file_exists($fullPdfDirectory)) {
             Log::info("Création du répertoire: {$fullPdfDirectory}");
             mkdir($fullPdfDirectory, 0755, true);
         }
@@ -90,15 +89,16 @@ class OrderController extends Controller
     }
 
     /**
-     * Télécharge le bon de livraison d'une commande
+     * Télécharge le bon de livraison d'une commande.
      *
-     * @param Order $order La commande dont on veut télécharger le bon de livraison
+     * @param  Order  $order  La commande dont on veut télécharger le bon de livraison
      * @return \Symfony\Component\HttpFoundation\StreamedResponse Le flux de téléchargement du PDF
      */
     public function downloadDeliveryNote(Order $order)
     {
         Log::info("Téléchargement du bon de livraison demandé pour la commande #{$order->number}");
         $pdf = $this->generateDeliveryNote($order);
+
         return $pdf->stream("BL-{$order->number}.pdf");
     }
 }

@@ -8,23 +8,22 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 
 /**
- * Contrôleur pour gérer les statistiques mensuelles des commandes
+ * Contrôleur pour gérer les statistiques mensuelles des commandes.
  */
 class MonthController extends Controller
 {
     /**
-     * Met à jour les statistiques pour un mois spécifique
+     * Met à jour les statistiques pour un mois spécifique.
      *
-     * @param string|null $month Le mois au format mm (01-12)
-     * @param string|null $year L'année au format YYYY
-     * @return void
+     * @param  string|null  $month  Le mois au format mm (01-12)
+     * @param  string|null  $year  L'année au format YYYY
      */
     public static function updateMonthStats(?string $month = null, ?string $year = null): void
     {
         Log::channel('stats')->info('Début de la mise à jour des statistiques mensuelles');
 
         // Si le mois ou l'année ne sont pas spécifiés, utiliser le mois/année en cours
-        if (!$month || !$year) {
+        if (! $month || ! $year) {
             $date = Carbon::now();
             $month = $date->format('m');
             $year = $date->format('Y');
@@ -57,9 +56,7 @@ class MonthController extends Controller
     }
 
     /**
-     * Initialise les statistiques pour tous les mois ayant des commandes
-     *
-     * @return void
+     * Initialise les statistiques pour tous les mois ayant des commandes.
      */
     public static function initializeAllMonths(): void
     {
@@ -92,9 +89,7 @@ class MonthController extends Controller
     }
 
     /**
-     * Initialise les statistiques pour le mois en cours et le mois précédent
-     *
-     * @return void
+     * Initialise les statistiques pour le mois en cours et le mois précédent.
      */
     public static function initializeCurrentAndLastMonth(): void
     {
@@ -121,9 +116,7 @@ class MonthController extends Controller
     }
 
     /**
-     * Point d'entrée pour la mise à jour des statistiques mensuelles
-     *
-     * @return void
+     * Point d'entrée pour la mise à jour des statistiques mensuelles.
      */
     public function month(): void
     {

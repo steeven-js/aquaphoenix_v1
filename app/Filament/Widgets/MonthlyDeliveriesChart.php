@@ -20,7 +20,7 @@ class MonthlyDeliveriesChart extends ChartWidget
             ->select([
                 DB::raw('EXTRACT(YEAR FROM delivered_date) as year'),
                 DB::raw('EXTRACT(MONTH FROM delivered_date) as month'),
-                DB::raw('COUNT(*) as total_deliveries')
+                DB::raw('COUNT(*) as total_deliveries'),
             ])
             ->whereNotNull('delivered_date')
             ->where('status', 'livré')
@@ -31,6 +31,7 @@ class MonthlyDeliveriesChart extends ChartWidget
             ->get()
             ->map(function ($item) {
                 $date = Carbon::createFromDate($item->year, $item->month, 1);
+
                 return [
                     'label' => $date->locale('fr')->isoFormat('MMMM YYYY'),
                     'value' => $item->total_deliveries,

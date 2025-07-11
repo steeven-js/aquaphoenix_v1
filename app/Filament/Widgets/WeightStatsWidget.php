@@ -3,17 +3,17 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Order;
+use Carbon\Carbon;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
-use Carbon\Carbon;
 
 /**
- * Widget affichant les statistiques de poids des commandes
+ * Widget affichant les statistiques de poids des commandes.
  */
 class WeightStatsWidget extends BaseWidget
 {
     /**
-     * Retourne les statistiques à afficher dans le widget
+     * Retourne les statistiques à afficher dans le widget.
      *
      * @return array Les statistiques formatées pour l'affichage
      */
@@ -23,7 +23,7 @@ class WeightStatsWidget extends BaseWidget
         $currentMonth = Carbon::now()->startOfMonth();
         $currentMonthWeight = Order::whereBetween('delivered_date', [
             $currentMonth->copy()->startOfMonth(),
-            $currentMonth->copy()->endOfMonth()
+            $currentMonth->copy()->endOfMonth(),
         ])
             ->where('status', 'livré')
             ->withSum('items', 'qty')
@@ -36,7 +36,7 @@ class WeightStatsWidget extends BaseWidget
 
         $monthlyWeights = Order::whereBetween('delivered_date', [
             $sixMonthsAgo,
-            $lastMonthEnd
+            $lastMonthEnd,
         ])
             ->where('status', 'livré')
             ->withSum('items', 'qty')

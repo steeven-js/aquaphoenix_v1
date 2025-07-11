@@ -8,15 +8,15 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
 /**
- * Contrôleur pour générer les PDF des livraisons mensuelles
+ * Contrôleur pour générer les PDF des livraisons mensuelles.
  */
 class MonthPdfController extends Controller
 {
     /**
-     * Génère un PDF des livraisons pour un mois donné
+     * Génère un PDF des livraisons pour un mois donné.
      *
-     * @param string $month Le mois au format mm (01-12)
-     * @param string $year L'année au format YYYY
+     * @param  string  $month  Le mois au format mm (01-12)
+     * @param  string  $year  L'année au format YYYY
      * @return \Illuminate\Http\Response Le fichier PDF à télécharger
      */
     public function generatePdf(string $month, string $year)
@@ -32,7 +32,7 @@ class MonthPdfController extends Controller
             ->orderBy('delivered_date')
             ->get();
 
-        Log::info("Nombre de commandes trouvées: " . $orders->count());
+        Log::info('Nombre de commandes trouvées: ' . $orders->count());
 
         // Calcule le poids total des livraisons
         $totalWeight = $orders->sum(function ($order) {
@@ -55,7 +55,7 @@ class MonthPdfController extends Controller
             'totalWeight' => $totalWeight,
         ]);
 
-        Log::info("PDF généré avec succès");
+        Log::info('PDF généré avec succès');
 
         // Retourne le PDF pour téléchargement
         return $pdf->download("livraisons-$monthName-$year.pdf");

@@ -3,16 +3,17 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Filament\Models\Contracts\FilamentUser;
-use Filament\Panel;
 
 class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -49,17 +50,14 @@ class User extends Authenticatable implements FilamentUser
     }
 
     /**
-     * Détermine si l'utilisateur peut accéder au panel Filament
-     *
-     * @param Panel $panel
-     * @return bool
+     * Détermine si l'utilisateur peut accéder au panel Filament.
      */
     public function canAccessPanel(Panel $panel): bool
     {
         // Pour l'instant, tous les utilisateurs connectés peuvent accéder
         // Vous pouvez ajouter des restrictions ici plus tard
         return true;
-        
+
         // Exemples de restrictions possibles :
         // return $this->email === 'admin@aquaphoenix.fr';
         // return $this->hasRole('admin');

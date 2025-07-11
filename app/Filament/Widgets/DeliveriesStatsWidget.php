@@ -4,28 +4,28 @@ namespace App\Filament\Widgets;
 
 use App\Models\Month;
 use App\Models\Order;
+use Carbon\Carbon;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
-use Carbon\Carbon;
 use Livewire\Attributes\On;
 
 /**
- * Widget affichant les statistiques de livraisons
+ * Widget affichant les statistiques de livraisons.
  */
 class DeliveriesStatsWidget extends BaseWidget
 {
     /**
-     * Position du widget dans le tableau de bord
+     * Position du widget dans le tableau de bord.
      */
     protected static ?int $sort = 2;
 
     /**
-     * Identifiant unique du widget
+     * Identifiant unique du widget.
      */
     protected static ?string $widgetId = 'deliveries-stats-widget';
 
     /**
-     * Rafraîchit les données du widget lors de l'événement 'refresh-deliveries-stats-widget'
+     * Rafraîchit les données du widget lors de l'événement 'refresh-deliveries-stats-widget'.
      */
     #[On('refresh-deliveries-stats-widget')]
     public function refresh(): void
@@ -34,7 +34,7 @@ class DeliveriesStatsWidget extends BaseWidget
     }
 
     /**
-     * Retourne les statistiques à afficher dans le widget
+     * Retourne les statistiques à afficher dans le widget.
      *
      * @return array Les statistiques formatées pour l'affichage
      */

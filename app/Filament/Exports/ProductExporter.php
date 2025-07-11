@@ -46,4 +46,4 @@ class ProductExporter extends Exporter
 
         return $body;
     }
-} 
+}

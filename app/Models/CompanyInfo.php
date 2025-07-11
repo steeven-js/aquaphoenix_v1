@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Modèle pour gérer les informations de l'entreprise
+ * Modèle pour gérer les informations de l'entreprise.
  */
 class CompanyInfo extends Model
 {
     /**
-     * Les attributs qui peuvent être assignés en masse
+     * Les attributs qui peuvent être assignés en masse.
      *
      * @var array<string>
      */
@@ -27,7 +27,7 @@ class CompanyInfo extends Model
     ];
 
     /**
-     * Récupère ou crée les informations par défaut de l'entreprise
+     * Récupère ou crée les informations par défaut de l'entreprise.
      *
      * @return CompanyInfo
      */
@@ -47,7 +47,7 @@ class CompanyInfo extends Model
     }
 
     /**
-     * Accesseur pour obtenir l'adresse complète formatée
+     * Accesseur pour obtenir l'adresse complète formatée.
      *
      * @return string L'adresse complète au format: adresse, code postal, ville, pays
      */
